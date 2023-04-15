@@ -18,6 +18,20 @@ file = 'file://' + caminho + '/files/login.html'
 driver.get(file)
 
 
+# Declaração de funções
+def create_dataframe(caminho_xlsx):
+    '''
+    Função para criar um dataframe com os dados do arquivo .xlsx
+
+    Parâmetros:
+        caminho_xlsx (string): Caminho do arquivo .xlsx
+    Returns:
+        df (DataFrame): Dataframe com os dados do arquivo .xlsx
+    '''
+    df = pd.read_excel(caminho_xlsx)
+    return df
+
+
 def login(name, passwd):
     '''
     Função para fazer login no sistema
@@ -43,8 +57,11 @@ def login(name, passwd):
 
 
 def main():
+    # Logando no sistema
     login('gustavo', '123')
-    sleep(5)
+
+    # Criando dataframe
+    df_notas = create_dataframe('files/NotasEmitir.xlsx')
 
 
 if __name__ == '__main__':
