@@ -7,8 +7,16 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.select import Select
 
 # Inicializando o serviço do Chrome
+options = webdriver.ChromeOptions()
+options.add_experimental_option("prefs", {
+    "download.default_directory": r"~/Downloads/notas-emitidas",
+    "download.prompt_for_download": False,
+    "download.directory_upgrade": True,
+    "safebrowsing.enabled": True
+})
+
 service = Service('/home/gustgmrs/Downloads/chromedriver')
-driver = webdriver.Chrome(service=service)
+driver = webdriver.Chrome(service=service, options=options)
 
 # Pegando caminho da página
 caminho = os.getcwd()
@@ -117,6 +125,10 @@ def main():
         # Preenchendo valor total
         valor_total = driver.find_element(By.NAME, 'total')
         valor_total.send_keys(str(df_notes.loc[line, 'Valor Total']))
+
+        # Fazendo o download do arquivo
+        button = driver.find_element(By.CLASS_NAME, 'registerbtn')
+        button.click()
 
         # Recarregando página para limpar os campos
         driver.refresh()
